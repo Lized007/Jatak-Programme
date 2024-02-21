@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Calculator</title>
+<style>
+    /* Add your CSS styling here */
+    body {
+        font-family: Arial, sans-serif;
+        margin: 0;
+        padding: 0;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: 100vh;
+        background: linear-gradient(to right, #FFD700, #FFA500);
+    }
+
+    .container {
+        text-align: center;
+        background-color: #f2f2f2;
+        padding: 20px;
+        border-radius: 10px;
+        box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
+    }
+
+    input[type="text"], input[type="number"] {
+        padding: 10px;
+        margin: 5px;
+        border: none;
+        border-radius: 5px;
+        width: 90%;
+    }
+
+    button {
+        padding: 10px 20px;
+        margin: 10px;
+        border: none;
+        border-radius: 5px;
+        background-color: #4CAF50;
+        color: white;
+        font-size: 16px;
+        cursor: pointer;
+        transition: background-color 0.3s;
+    }
+
+    button:hover {
+        background-color: #45a049;
+    }
+
+    #result {
+        margin-top: 20px;
+        font-size: 18px;
+        font-weight: bold;
+    }
+</style>
+</head>
+<body>
+
+<div class="container">
+    <h1 style="color: #333;">Calculator</h1>
+    
+    <!-- Input Fields -->
+    <label for="time1">Input 1st Time:</label><br>
+    <input type="text" id="time1" placeholder="HH MM SS"><br>
+    <label for="time2">Input 2nd Time:</label><br>
+    <input type="text" id="time2" placeholder="HH MM SS"><br>
+    
+    <!-- Buttons for Addition and Subtraction -->
+    <button onclick="calculate('addition')">Addition</button>
+    <button onclick="calculate('subtraction')">Subtraction</button>
+    
+    <!-- Result -->
+    <div id="result"></div>
+</div>
+
+<script>
+function calculate(operation) {
+    let time1Input = document.getElementById("time1").value.trim().split(" ");
+    let time2Input = document.getElementById("time2").value.trim().split(" ");
+
+    // Parsing hours, minutes, and seconds from the input
+    let a = parseInt(time1Input[0]);
+    let b = parseInt(time1Input[1]);
+    let c = parseInt(time1Input[2]);
+    let d = parseInt(time2Input[0]);
+    let e = parseInt(time2Input[1]);
+    let f = parseInt(time2Input[2]);
+
+    let g, h, i;
+
+    if (operation === 'subtraction') {
+        if (c < f) {
+            i = (c + 60) - f;
+        } else if (c >= f) {
+            i = c - f;
+        }
+
+        if (c < f && b < e) {
+            h = (b - 1) + 60 - e;
+        } else if (c >= f && b < e) {
+            h = (b + 60) - e;
+        } else if (c < f && b >= e) {
+            h = (b - 1) + 60 - e;
+        } else if (c >= f && b >= e) {
+            h = b - e;
+        }
+
+        if (b < e) {
+            g = (a - 1) - d;
+        } else if (b >= e) {
+            g = a - d;
+        }
+    } else if (operation === 'addition') {
+        if ((c + f) > 60) {
+            i = (c + f) - 60;
+        } else if ((c + f) < 60) {
+            i = c + f;
+        } else if ((c + f) === 60) {
+            i = 0;
+        }
+
+        if ((c + f) >= 60 && (b + e) >= 59) {
+            h = (1 + b + e) - 60;
+        } else if ((c + f) >= 60 && (b + e) < 59) {
+            h = (1 + b + e);
+        } else if ((c + f) < 60 && (b + e) >= 60) {
+            h = (b + e) - 60;
+        } else if ((c + f) < 60 && (b + e) < 60) {
+            h = (b + e);
+        }
+
+        if ((b + e) >= 59 && (c + f) >= 60) {
+            g = (a + d + 1);
+        } else if ((c + f) < 60 && (b + e) >= 60) {
+            g = (a + d + 1);
+        } else if ((c + f) < 60 && (b + e) < 60) {
+            g = (a + d);
+        } else if ((c + f) >= 60 && (b + e) < 59) {
+            g = (a + d);
+        }
+    }
+
+    let resultDiv = document.getElementById("result");
+    resultDiv.innerHTML = `The Answer is ${g}/${h}/${i}`;
+}
+</script>
+
+</body>
+</html>

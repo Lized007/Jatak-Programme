@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Time Conversion</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            background: linear-gradient(to bottom right, #4a148c, #880e4f);
+            color: #fff;
+        }
+        .container {
+            text-align: center;
+            background-color: rgba(255, 255, 255, 0.1);
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.3);
+        }
+        input[type="text"] {
+            width: 300px;
+            padding: 10px;
+            margin: 10px;
+            border: none;
+            border-radius: 5px;
+            outline: none;
+            font-size: 16px;
+        }
+        button {
+            padding: 10px 20px;
+            background-color: #007bff;
+            color: #fff;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 16px;
+        }
+        button:hover {
+            background-color: #0056b3;
+        }
+        #result {
+            margin-top: 20px;
+            font-size: 18px;
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <h1>Time Conversion</h1>
+    <input type="text" id="timeInput" placeholder="ଦ ଲି ବି">
+    <br>
+    <button onclick="convertTime()">Convert</button>
+    <p id="result"></p>
+</div>
+
+<script>
+    function convertTime() {
+        let userInput = document.getElementById('timeInput').value.trim();
+        let [h, m, s] = userInput.split(' ').map(num => parseInt(num));
+
+        let da, la, bi, pa, da1, la1, bi1, pa1, da2, la2, bi2, pa2, da3, la3, bi3, pa3, bi4, la4;
+        let h1, decipartofh1, m1, decipartofm1, s1, decipartofs1;
+
+        h1 = h * 2.5;
+        da = Math.floor(h1);
+        decipartofh1 = h1 - da;
+
+        la = decipartofh1 === 0.5 ? 30 : 0;
+        bi = 0;
+        pa = 0;
+
+        m1 = m * 2.5;
+        if (m < 24) {
+            la1 = Math.floor(m1);
+            decipartofm1 = m1 - la1;
+            bi1 = decipartofm1 === 0.5 ? 30 : 0;
+            da1 = 0;
+        } else if (m > 23 && m < 48) {
+            m1 -= 60;
+            la1 = Math.floor(m1);
+            decipartofm1 = m1 - la1;
+            bi1 = decipartofm1 === 0.5 ? 30 : 0;
+            da1 = 1;
+        } else if (m > 47) {
+            m1 -= 120;
+            la1 = Math.floor(m1);
+            decipartofm1 = m1 - la1;
+            bi1 = decipartofm1 === 0.5 ? 30 : 0;
+            da1 = 2;
+        }
+        pa1 = 0;
+
+        s1 = s * 2.5;
+        if (s < 24) {
+            bi2 = Math.floor(s1);
+            decipartofs1 = s1 - bi2;
+            pa2 = decipartofs1 === 0.5 ? 30 : 0;
+            la2 = 0;
+        } else if (s > 23 && s < 48) {
+            s1 -= 60;
+            bi2 = Math.floor(s1);
+            decipartofs1 = s1 - bi2;
+            pa2 = decipartofs1 === 0.5 ? 30 : 0;
+            la2 = 1;
+        } else if (s > 47) {
+            s1 -= 120;
+            bi2 = Math.floor(s1);
+            decipartofs1 = s1 - bi2;
+            pa2 = decipartofs1 === 0.5 ? 30 : 0;
+            la2 = 2;
+        }
+        da2 = 0;
+
+        pa3 = pa + pa1 + pa2;
+        bi4 = bi + bi1 + bi2;
+        bi3 = bi4 % 60;
+        la4 = la + la1 + la2 + Math.floor(bi4 / 60);
+        la3 = la4 % 60;
+        da3 = da + da1 + da2 + Math.floor(la4 / 60);
+
+        let result = `ସମୟ ${da3}/${la3}/${bi3}/${pa3}`;
+        document.getElementById('result').innerText = result;
+    }
+</script>
+
+</body>
+</html>

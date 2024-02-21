@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Division Calculator</title>
+<style>
+    /* Add your CSS styling here */
+    body {
+        font-family: Arial, sans-serif;
+        margin: 0;
+        padding: 0;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: 100vh;
+        background: linear-gradient(to right, #36D1DC, #5B86E5);
+    }
+
+    .container {
+        text-align: center;
+        background-color: #f2f2f2;
+        padding: 20px;
+        border-radius: 10px;
+        box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
+    }
+
+    input {
+        padding: 10px;
+        margin: 5px;
+        border: none;
+        border-radius: 5px;
+    }
+
+    button {
+        padding: 10px 20px;
+        margin: 10px;
+        border: none;
+        border-radius: 5px;
+        background-color: #4CAF50;
+        color: white;
+        font-size: 16px;
+        cursor: pointer;
+        transition: background-color 0.3s;
+    }
+
+    button:hover {
+        background-color: #45a049;
+    }
+
+    #result {
+        margin-top: 20px;
+        font-size: 18px;
+    }
+</style>
+</head>
+<body>
+
+<div class="container">
+    <h1 style="color: #333;">1st Page Bhagya</h1>
+    <label for="bhajya">Enter Dividend:</label><br>
+    <input type="number" id="bhajya"><br>
+    <label for="bhajaka">Enter Divisor:</label><br>
+    <input type="number" id="bhajaka"><br>
+    <button onclick="calculateDivision()">Calculate</button><br>
+    <div id="result"></div>
+</div>
+
+<script>
+function calculateDivision() {
+    let bhajya = parseInt(document.getElementById("bhajya").value);
+    let bhajaka = parseInt(document.getElementById("bhajaka").value);
+    let bhagafala = Math.floor(bhajya / bhajaka);
+    let bhagasesa = bhajya % bhajaka;
+    let bhajya2 = bhagasesa * 60;
+    let bhagafala2 = Math.floor(bhajya2 / bhajaka);
+    let bhagasesa2 = bhajya2 % bhajaka;
+    let bhajya3 = bhagasesa2 * 60;
+    let bhagafala3 = Math.floor(bhajya3 / bhajaka);
+
+    let resultDiv = document.getElementById("result");
+    resultDiv.innerHTML = `${bhagafala} Ansa ${bhagafala2} Kala ${bhagafala3} Bikala`;
+}
+</script>
+
+</body>
+</html>

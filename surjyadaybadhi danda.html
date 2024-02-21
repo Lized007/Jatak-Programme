@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Birth Time Calculation</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 20px;
+display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            background: linear-gradient(135deg, #3498db, #8e44ad);
+            color: #fff;
+        }
+        h1 {
+            text-align: center;
+        }
+        .container {
+            text-align: center;
+            background-color: rgba(255, 255, 255, 0.1);
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.3);
+        }
+
+        form {
+            max-width: 400px;
+            margin: 0 auto;
+            background-color: rgba(255, 255, 255, 0.1);
+            padding: 20px;
+            border-radius: 10px;
+        }
+        label {
+            display: block;
+            margin-bottom: 5px;
+        }
+        input[type="text"] {
+            width: calc(100% - 22px);
+            padding: 8px;
+            margin-bottom: 10px;
+            border: none;
+            border-radius: 5px;
+            background-color: rgba(255, 255, 255, 0.7);
+            color: #333;
+        }
+        button {
+            width: 100%;
+            padding: 10px;
+            background-color: #2ecc71;
+            color: #fff;
+            border: none;
+            cursor: pointer;
+            border-radius: 5px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            transition: background-color 0.3s ease;
+        }
+        button:hover {
+            background-color: #27ae60;
+        }
+        #result {
+            margin-top: 20px;
+            text-align: center;
+            font-weight: bold;
+        }
+    </style>
+</head>
+<body>
+<div class="container">
+    <h1>ରାତ୍ର ସୂର୍ଯ୍ୟୋଦୟବଧୀ ଦଣ୍ଡ</h1>
+    <form id="calculationForm" center>
+        <label for="janmaBelaku">ଜନ୍ମ ବେଳକୁ ସୂର୍ଯ୍ୟୋଦୟ</label>
+        <input type="text" id="janmaBelaku" name="janmaBelaku" placeholder="ଦ ଲି ବି" required>
+
+        <label for="janmaSamaya">ଜନ୍ମ ସମୟ</label>
+        <input type="text" id="janmaSamaya" name="janmaSamaya" placeholder="ଘ ମି ସେ" required>
+
+        <button type="submit">Calculate</button>
+    </form>
+
+    <div id="result"></div>
+</div>
+
+    <script>
+        document.getElementById('calculationForm').addEventListener('submit', function(event) {
+            event.preventDefault();
+
+            // Get form values
+            const janmaBelaku = document.getElementById('janmaBelaku').value.split(' ').map(Number);
+            const janmaSamaya = document.getElementById('janmaSamaya').value.split(' ').map(Number);
+            const [da2, la2, bi2] = janmaBelaku;
+            const [da4, la4, bi4] = janmaSamaya;
+
+            // Perform calculations
+            let da1 = 12;
+            let la1 = 0;
+            let bi1 = 0;
+            let bi3 = (bi1 < bi2) ? (bi1 + 60) - bi2 : bi1 - bi2;
+            let la3 = (bi1 < bi2 && la1 < la2) ? (la1 - 1) + 60 - la2 :
+                     (bi1 >= bi2 && la1 < la2) ? (la1 + 60) - la2 :
+                     (bi1 < bi2 && la1 >= la2) ? (la1 - 1) + 60 - la2 : la1 - la2;
+            let da3 = (la1 < la2) ? (da1 - 1) - da2 : da1 - da2;
+            let bi7 = (bi3 + bi4 > 60) ? (bi3 + bi4) - 60 : (bi3 + bi4 === 60) ? 0 : bi3 + bi4;
+            let la7 = ((bi3 + bi4) >= 60) ? (la3 + la4 >= 59 ? (1 + la3 + la4) - 60 : 1 + la3 + la4) :
+                      (la3 + la4 >= 60) ? (la3 + la4) - 60 : la3 + la4;
+            let da7 = ((la3 + la4) >= 59 && (bi3 + bi4) >= 60) ? (da3 + da4 + 1) :
+                      (bi3 + bi4 < 60 && (la3 + la4) >= 60) ? (da3 + da4 + 1) : da3 + da4;
+
+            let h1 = da7 * 2.5;
+            let da = Math.floor(h1);
+            let la = (h1 % 1 === 0.5) ? 30 : 0;
+            let bi = 0;
+            let pa = 0;
+
+            let m1 = la7 * 2.5;
+            let la5, bi5, da5;
+            if (la7 < 24) {
+                la5 = Math.floor(m1);
+                bi5 = (m1 % 1 === 0.5) ? 30 : 0;
+                da5 = 0;
+            } else if (la7 > 23 && la7 < 48) {
+                m1 -= 60.0;
+                la5 = Math.floor(m1);
+                bi5 = (m1 % 1 === 0.5) ? 30 : 0;
+                da5 = 1;
+            } else if (la7 > 47) {
+                m1 -= 120.0;
+                la5 = Math.floor(m1);
+                bi5 = (m1 % 1 === 0.5) ? 30 : 0;
+                da5 = 2;
+            }
+            let pa1 = 0;
+
+            let s1 = bi7 * 2.5;
+            let bi6, la6, da6;
+            if (bi7 < 24) {
+                bi6 = Math.floor(s1);
+                pa2 = (s1 % 1 === 0.5) ? 30 : 0;
+                la6 = 0;
+            } else if (bi7 > 23 && bi7 < 48) {
+                s1 -= 60.0;
+                bi6 = Math.floor(s1);
+                pa2 = (s1 % 1 === 0.5) ? 30 : 0;
+                la6 = 1;
+            } else if (bi7 > 47) {
+                s1 -= 120.0;
+                bi6 = Math.floor(s1);
+                pa2 = (s1 % 1 === 0.5) ? 30 : 0;
+                la6 = 2;
+            }
+            da6 = 0;
+
+            let pa3 = pa + pa1 + pa2;
+            let bi9 = bi + bi5 + bi6;
+            let bi8 = (bi9 >= 60 && bi9 < 120) ? bi9 - 60 : (bi9 > 119) ? bi9 - 120 : bi9;
+            let la9 = (bi9 >= 60 && bi9 < 120) ? 1 + la + la5 + la6 : (bi9 > 119) ? 2 + la + la5 + la6 : la + la5 + la6;
+            let la8 = (la9 >= 60 && la9 < 120) ? la9 - 60 : (la9 > 119) ? la9 - 120 : la9;
+            let da8 = (la9 >= 60 && la9 < 120) ? 1 + da + da5 + da6 : (la9 > 119) ? 2 + da + da5 + da6 : da + da5 + da6;
+
+            // Display the result
+            document.getElementById('result').textContent = `The final result is ${da8}/${la8}/${bi8}/${pa3}`;
+        });
+    </script>
+</body>
+</html>

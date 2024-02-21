@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="or">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ଅବସ୍ଥା</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            background: linear-gradient(to right, #FFD700, #4CAF50);
+        }
+
+        .container {
+            text-align: center;
+            background-color: #f2f2f2;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
+        }
+
+        input[type="text"], input[type="number"] {
+            padding: 10px;
+            margin: 5px;
+            border: none;
+            border-radius: 5px;
+            width: 90%;
+        }
+
+        button {
+            padding: 10px 20px;
+            margin: 10px;
+            border: none;
+            border-radius: 5px;
+            background-color: #4CAF50;
+            color: white;
+            font-size: 16px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+
+        button:hover {
+            background-color: #45a049;
+        }
+
+        #result {
+            margin-top: 20px;
+            font-size: 18px;
+            font-weight: bold;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>ଅବସ୍ଥା</h1>
+        <input type="text" id="inputNumber" class="inputField" placeholder="ଗ୍ରହ ନମ୍ବର ଦିଅନ୍ତୁ">
+        <input type="text" id="inputNumberRange" class="inputField" placeholder="ଡିଗ୍ରୀ ନମ୍ବର ଦିଅନ୍ତୁ">
+        <button onclick="processInput()" class="submitButton">Submit</button>
+        <p id="result"></p>
+    </div>
+    <script>
+        function processInput() {
+            var num = document.getElementById('inputNumber').value;
+            var rangeNum = document.getElementById('inputNumberRange').value;
+
+            num = parseInt(num);
+            rangeNum = parseInt(rangeNum);
+
+            if (isNaN(num) || isNaN(rangeNum)) {
+                document.getElementById('result').textContent = "ଦୟାକରି ବୈଧ ସଂଖ୍ୟା ଲିଖନ୍ତୁ।";
+                return;
+            }
+
+            var result;
+            if (num % 2 === 0) {
+                result = evenResponse(rangeNum);
+            } else {
+                result = oddResponse(rangeNum);
+            }
+
+            document.getElementById('result').textContent = "ଅବସ୍ଥା: " + result;
+        }
+
+        function evenResponse(num) {
+            if (num >= 0 && num <= 6) {
+                return "ମୃତ";
+            } else if (num >= 7 && num <= 12) {
+                return "ବୃଦ୍ଧ";
+            } else if (num >= 13 && num <= 18) {
+                return "ଯୁବକ";
+            } else if (num >= 19 && num <= 24) {
+                return "କୁମାର";
+            } else if (num >= 25 && num <= 30) {
+                return "ବାଳକ";
+            } else {
+                return "ଅବୈଧ ସଂଖ୍ୟା! ଦୟାକରି 0 ଥିବା 30 ମଧ୍ୟରେ ସଂଖ୍ୟା ଲିଖନ୍ତୁ।";
+            }
+        }
+
+        function oddResponse(num) {
+            if (num >= 0 && num <= 6) {
+                return "ବାଳକ";
+            } else if (num >= 7 && num <= 12) {
+                return "କୁମାର";
+            } else if (num >= 13 && num <= 18) {
+                return "ଯୁବକ";
+            } else if (num >= 19 && num <= 24) {
+                return "ବୃଦ୍ଧ";
+            } else if (num >= 25 && num <= 30) {
+                return "ମୃତ";
+            } else {
+                return "ଅବୈଧ ସଂଖ୍ୟା! ଦୟାକରି 0 ଥିବା 30 ମଧ୍ୟରେ ସଂଖ୍ୟା ଲିଖନ୍ତୁ।";
+            }
+        }
+    </script>
+</body>
+</html>

@@ -1,0 +1,200 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Nakhyatra Calculation</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background: linear-gradient(to bottom right, green, yellow);
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+
+        #container {
+            background-color: #ffffff;
+            border-radius: 10px;
+            box-shadow: 0px 0px 20px rgba(0, 0, 0, 0.1);
+            padding: 30px;
+            max-width: 400px;
+            width: 100%;
+        }
+
+        h1 {
+            text-align: center;
+            color: #333333;
+        }
+
+        form {
+            margin-bottom: 20px;
+        }
+
+        label {
+            font-weight: bold;
+            margin-bottom: 5px;
+            display: block;
+        }
+
+        input[type="number"] {
+            width: 100%;
+            padding: 10px;
+            margin-bottom: 10px;
+            border: 1px solid #cccccc;
+            border-radius: 5px;
+            box-sizing: border-box;
+        }
+
+        button[type="submit"] {
+            width: 100%;
+            padding: 12px;
+            border: none;
+            border-radius: 5px;
+            background-color: #4CAF50;
+            color: white;
+            font-size: 16px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+
+        button[type="submit"]:hover {
+            background-color: #45a049;
+        }
+
+        #result {
+            background-color: #f9f9f9;
+            padding: 20px;
+            border-radius: 5px;
+            box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+        }
+
+        #result p {
+            margin: 0;
+            margin-bottom: 10px;
+        }
+    </style>
+</head>
+<body>
+    <div id="container">
+        <h1>Nakhyatra Calculation</h1>
+        <form id="nakhyatraForm">
+            <label for="da2">PURBA DINA RA NAKHYATRA:</label>
+            <input type="number" id="da2" name="da2" required>
+            <input type="number" id="la2" name="la2" required>
+            <input type="number" id="bi2" name="bi2" required>
+            <br>
+            <label for="da4">JANMA NAKHYATRA:</label>
+            <input type="number" id="da4" name="da4" required>
+            <input type="number" id="la4" name="la4" required>
+            <input type="number" id="bi4" name="bi4" required>
+            <br>
+            <label for="da6">SURYA DAYA BADHIDANDA:</label>
+            <input type="number" id="da6" name="da6" required>
+            <input type="number" id="la6" name="la6" required>
+            <input type="number" id="bi6" name="bi6" required>
+            <br>
+            <label for="dasabarsa">DASHA BARSA:</label>
+            <input type="number" id="dasabarsa" name="dasabarsa" required>
+            <br>
+            <button type="submit">Calculate</button>
+        </form>
+        <div id="result"></div>
+    </div>
+
+  <script>
+        document.getElementById("nakhyatraForm").addEventListener("submit", function(event) {
+            event.preventDefault();
+            calculateNakhyatra();
+        });
+
+        function calculateNakhyatra() {
+            let da1 = 60, la1 = 0, bi1 = 0;
+            let da2 = parseInt(document.getElementById("da2").value);
+            let la2 = parseInt(document.getElementById("la2").value);
+            let bi2 = parseInt(document.getElementById("bi2").value);
+            let da3, la3, bi3;
+            let da4 = parseInt(document.getElementById("da4").value);
+            let la4 = parseInt(document.getElementById("la4").value);
+            let bi4 = parseInt(document.getElementById("bi4").value);
+            let da5, la5, bi5;
+            let da6 = parseInt(document.getElementById("da6").value);
+            let la6 = parseInt(document.getElementById("la6").value);
+            let bi6 = parseInt(document.getElementById("bi6").value);
+            let da7, la7, bi7;
+            let da8, la8, bi8;
+            let da10, la10, bi10;
+            let da11, la11, bi11;
+            let dasabarsa = parseInt(document.getElementById("dasabarsa").value);
+            let bhagafala, bhagasesa, bhagafala2, bhagasesa2, bhagafala3;
+            let bhajaka, bhajya, bhajya2, bhajya3;
+            let md, da5f, la5f, bi5f, mr, da7f, la7f, bi7f;
+            let bhajakaf, bhajyaf, bhajya_temp;
+
+            bi3 = bi1 < bi2 ? (bi1 + 60) - bi2 : bi1 - bi2;
+            la3 = bi1 < bi2 ? (la1 - 1) + 60 - la2 : la1 >= la2 ? la1 - la2 : (la1 + 60) - la2;
+            da3 = la1 < la2 ? (da1 - 1) - da2 : da1 - da2;
+
+            bi5 = (bi3 + bi4) % 60;
+            la5 = ((bi3 + bi4) >= 60 ? 1 : 0) + la3 + la4;
+            if (la5 >= 60) {
+                la5 -= 60;
+                da5 = da3 + da4 + 1;
+            } else {
+                da5 = da3 + da4;
+            }
+
+            bi7 = bi6 < bi2 ? (bi6 + 60) - bi2 : bi6 - bi2;
+            la7 = bi6 < bi2 ? (la6 - 1) + 60 - la2 : la6 >= la2 ? la6 - la2 : (la6 + 60) - la2;
+            da7 = la6 < la2 ? (da6 - 1) - da2 : da6 - da2;
+
+            bi8 = bi5 < bi7 ? (bi5 + 60) - bi7 : bi5 - bi7;
+            la8 = bi5 < bi7 ? (la5 - 1) + 60 - la7 : la5 >= la7 ? la5 - la7 : (la5 + 60) - la7;
+            da8 = la5 < la7 ? (da5 - 1) - da7 : da5 - da7;
+
+            let result = document.getElementById("result");
+            result.innerHTML = "";
+            result.innerHTML += `<p>RUKHYA DANTA ${da5}/${la5}/${bi5}</p>`;
+            result.innerHTML += `<p>RUKHYA BHUKTI ${da7}/${la7}/${bi7}</p>`;
+            result.innerHTML += `<p>SESA DANDA ${da8}/${la8}/${bi8}</p>`;
+
+            da5f = da5;
+            la5f = la5;
+            bi5f = bi5 > 9 ? bi5 / 100 : bi5 / 10;
+            md = da5f * 60;
+            bhajakaf = md + (bi5f + la5f);
+            bhajakaf = bi5f > 49 ? bhajakaf + 1 : bhajakaf;
+            bhajaka = Math.floor(bhajakaf);
+
+            da7f = da7;
+            la7f = la7;
+            bi7f = bi7 > 9 ? bi7 / 100 : bi7 / 10;
+            mr = da7f * 60;
+            bhajyaf = mr + (bi7f + la7f);
+            bhajyaf = bi7f > 49 ? bhajyaf + 1 : bhajyaf;
+            bhajya_temp = Math.floor(bhajyaf);
+
+            bhajya = bhajya_temp * dasabarsa;
+            bhagafala = Math.floor(bhajya / bhajaka);
+            bhagasesa = bhajya % bhajaka;
+            bhajya2 = bhagasesa * 12;
+            bhagafala2 = Math.floor(bhajya2 / bhajaka);
+            bhagasesa2 = bhajya2 % bhajaka;
+            bhajya3 = bhagasesa2 * 30;
+            bhagafala3 = Math.floor(bhajya3 / bhajaka);
+
+            result.innerHTML += `<p>${bhagafala} barsa ${bhagafala2} masa ${bhagafala3} dina</p>`;
+
+            da10 = dasabarsa - 1;
+            la10 = 11;
+            bi10 = 30;
+            bi11 = bi10 < bhagafala3 ? (bi10 + 60) - bhagafala3 : bi10 - bhagafala3;
+            la11 = bi10 < bhagafala3 ? (la10 - 1) + 60 - bhagafala2 : la10 >= bhagafala2 ? la10 - bhagafala2 : (la10 + 60) - bhagafala2;
+            da11 = la10 < bhagafala2 ? (da10 - 1) - bhagafala : da10 - bhagafala;
+
+            result.innerHTML += `<p>The Answer is ${da11}/${la11}/${bi11}</p>`;
+        }
+    </script>
+</body>
+</html>
