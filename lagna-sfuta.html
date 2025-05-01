@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Lagnasfuta</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background: linear-gradient(to right, #36D1DC, #5B86E5);
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      margin: 0;
+    }
+
+    .container {
+      background: #fff;
+      padding: 20px;
+      border-radius: 12px;
+      text-align: center;
+      box-shadow: 0 0 15px rgba(0,0,0,0.2);
+    }
+
+    input {
+      margin: 5px;
+      padding: 10px;
+      width: 200px;
+      text-align: center;
+      border-radius: 5px;
+      border: 1px solid #ccc;
+    }
+
+    button {
+      margin-top: 15px;
+      padding: 10px 20px;
+      font-size: 16px;
+      background: #4CAF50;
+      color: white;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+    }
+
+    button:hover {
+      background: #45a049;
+    }
+
+    #result {
+      margin-top: 20px;
+      font-size: 18px;
+    }
+  </style>
+</head>
+<body>
+
+<div class="container">
+  <h2>Lagna-Sfuta</h2>
+
+  <p>Lagna Bhukti:  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+    <input type="text" id="input1" placeholder="ଦ ଲି ବି" />
+  </p>
+
+  <p>Rashi Total Lagna:  
+    <input type="text" id="input2" placeholder="ଦ ଲି ବି" />
+  </p>
+
+  <button onclick="calculate()">Calculate</button>
+  <div id="result"></div>
+</div>
+
+<script>
+function calculate() {
+  // Read and split inputs
+  let [dd, ll, bb] = document.getElementById("input1").value.trim().split(" ").map(Number);
+  let [dd1, ll1, bb1] = document.getElementById("input2").value.trim().split(" ").map(Number);
+
+  // Handle invalid entries
+  if (isNaN(dd) || isNaN(ll) || isNaN(bb) || isNaN(dd1) || isNaN(ll1) || isNaN(bb1)) {
+    document.getElementById("result").innerHTML = "Please enter valid space-separated numbers.";
+    return;
+  }
+
+  // First group
+  let ans1 = dd * 60;
+  let ans2 = ans1 + parseFloat(`${ll}.${bb < 10 ? '0' + bb : bb}`);
+  let roundedAns2 = (bb < 30) ? Math.floor(ans2) : Math.ceil(ans2);
+  let ans3 = roundedAns2 * 30;
+
+  // Second group
+  let answ1 = dd1 * 60;
+  let answ2 = answ1 + parseFloat(`${ll1}.${bb1 < 10 ? '0' + bb1 : bb1}`);
+  let finalDivisor = (bb1 < 30) ? Math.floor(answ2) : Math.ceil(answ2);
+
+  // Division logic
+  let bhajya = ans3;
+  let bhajaka = finalDivisor;
+
+  let bhagafala = Math.floor(bhajya / bhajaka);
+  let bhagasesa = bhajya % bhajaka;
+  let bhajya2 = bhagasesa * 60;
+  let bhagafala2 = Math.floor(bhajya2 / bhajaka);
+  let bhagasesa2 = bhajya2 % bhajaka;
+  let bhajya3 = bhagasesa2 * 60;
+  let bhagafala3 = Math.floor(bhajya3 / bhajaka);
+
+  document.getElementById("result").innerHTML = `
+    <b>Bhajya:</b> ${ans3}<br>
+    <b>Bhajak:</b> ${finalDivisor}<br><br>
+    <b>Final Result:</b> ${bhagafala} Ansa ${bhagafala2} Kala ${bhagafala3} Bikala
+  `;
+}
+</script>
+
+</body>
+</html>

@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>12 Pare Janma Suryadaya Badhi Danda</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background: linear-gradient(to bottom right, #4a148c, #880e4f);
+      color: white;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      margin: 0;
+    }
+    .container {
+      text-align: center;
+      padding: 30px;
+      border-radius: 12px;
+      background: rgba(255, 255, 255, 0.1);
+      box-shadow: 0 0 20px rgba(0,0,0,0.3);
+    }
+    input {
+      padding: 10px;
+      margin: 10px;
+      width: 250px;
+      border-radius: 6px;
+      border: none;
+      font-size: 16px;
+    }
+    button {
+      padding: 10px 20px;
+      font-size: 16px;
+      background-color: #007bff;
+      border: none;
+      border-radius: 6px;
+      color: white;
+      cursor: pointer;
+    }
+    button:hover {
+      background-color: #0056b3;
+    }
+    #result {
+      margin-top: 20px;
+      font-size: 20px;
+      color: #fff;
+    }
+  </style>
+</head>
+<body>
+<div class="container">
+  <h1>12 Pare Janma Suryadaya Badhi Danda</h1>
+ <p>Janma Time:- &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<input type="text" id="time2" placeholder="hh mm ss"></p>
+ <p>Su.day/ast Time:-  <input type="text" id="time1" placeholder="hh mm ss"></p>
+
+  <button onclick="processTime()">Convert</button>
+  <div id="result"></div>
+</div>
+
+<script>
+  function parseTime(str) {
+    let [h, m, s] = str.trim().split(/\s+/).map(x => parseInt(x));
+    return { h, m, s };
+  }
+
+  function subtractTime(base, input) {
+    let h1 = base.h === 12 ? 0 : base.h;
+    let h2 = input.h === 12 ? 0 : input.h;
+
+    let totalBase = h1 * 3600 + base.m * 60 + base.s;
+    let totalInput = h2 * 3600 + input.m * 60 + input.s;
+
+    let diff = totalBase - totalInput;
+    if (diff < 0) diff += 12 * 3600;
+
+    let h = Math.floor(diff / 3600);
+    let m = Math.floor((diff % 3600) / 60);
+    let s = diff % 60;
+    if (h === 0) h = 12;
+
+    return { h, m, s };
+  }
+
+  function addTime(t1, t2) {
+    let s = t1.s + t2.s;
+    let m = t1.m + t2.m + Math.floor(s / 60);
+    let h = t1.h + t2.h + Math.floor(m / 60);
+
+    s %= 60;
+    m %= 60;
+    h %= 12;
+    if (h === 0) h = 12;
+
+    return { h, m, s };
+  }
+
+  function toDhandaLita(h, m, s) {
+    let da = Math.floor(h * 2.5);
+    let la = (h * 2.5) % 1 === 0.5 ? 30 : 0;
+
+    let m1 = m * 2.5, la1, bi1, da1 = 0;
+    if (m < 24) {
+      la1 = Math.floor(m1);
+      bi1 = (m1 % 1 === 0.5) ? 30 : 0;
+    } else if (m < 48) {
+      m1 -= 60; da1 = 1;
+      la1 = Math.floor(m1);
+      bi1 = (m1 % 1 === 0.5) ? 30 : 0;
+    } else {
+      m1 -= 120; da1 = 2;
+      la1 = Math.floor(m1);
+      bi1 = (m1 % 1 === 0.5) ? 30 : 0;
+    }
+
+    let s1 = s * 2.5, bi2, pa2, la2 = 0, da2 = 0;
+    if (s < 24) {
+      bi2 = Math.floor(s1);
+      pa2 = (s1 % 1 === 0.5) ? 30 : 0;
+    } else if (s < 48) {
+      s1 -= 60; la2 = 1;
+      bi2 = Math.floor(s1);
+      pa2 = (s1 % 1 === 0.5) ? 30 : 0;
+    } else {
+      s1 -= 120; la2 = 2;
+      bi2 = Math.floor(s1);
+      pa2 = (s1 % 1 === 0.5) ? 30 : 0;
+    }
+
+    let totalDa = da + da1 + da2;
+    let totalLa = la + la1 + la2;
+    let totalBi = bi1 + bi2;
+    let totalPa = pa2;
+
+    totalLa += Math.floor(totalBi / 60);
+    totalBi %= 60;
+
+    totalDa += Math.floor(totalLa / 60);
+    totalLa %= 60;
+
+    return `${totalDa}/${totalLa}/${totalBi}/${totalPa}`;
+  }
+
+  function processTime() {
+    const t1 = parseTime(document.getElementById("time1").value);
+    const t2 = parseTime(document.getElementById("time2").value);
+    const base = { h: 12, m: 0, s: 0 };
+
+    const subtracted = subtractTime(base, t1);
+    const added = addTime(subtracted, t2);
+
+    const result = toDhandaLita(added.h, added.m, added.s);
+    document.getElementById("result").innerText = `ସମୟ ${result}`;
+  }
+</script>
+</body>
+</html>
